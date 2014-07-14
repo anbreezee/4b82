@@ -5,12 +5,12 @@ var treeHash = '4b825dc642cb6eb9a060e54bf8d69288fbee4904';
 
 //--------------------------------------------------
 
-var getLockFile = function (pathToGit) {
-	return pathToGit + '/.git/4b82.lock';
-}
-
 var getPathToGitRoot = function (pathToGit) {
 	return pathToGit + '/.git';
+}
+
+var getLockFile = function (pathToGit) {
+	return getPathToGitRoot(pathToGit) + '/4b82.lock';
 }
 
 var getPathToHeadMaster = function (pathToGit) {
@@ -18,11 +18,11 @@ var getPathToHeadMaster = function (pathToGit) {
 }
 
 var getPathToObjectDir = function (pathToGit, hash) {
-	return getPathToGitRoot(pathToGit) + '/objects/' + hash.substr(0, 2) + '/';
+	return getPathToGitRoot(pathToGit) + '/objects/' + hash.substr(0, 2);
 }
 
 var getPathToObject = function (pathToGit, hash) {
-	return getPathToGitRoot(pathToGit) + '/objects/' + hash.substr(0, 2) + '/' + hash.substr(2);
+	return getPathToObjectDir(pathToGit) + '/' + hash.substr(2);
 }
 
 var getPathToTag = function (pathToGit, hash) {
