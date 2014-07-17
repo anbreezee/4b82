@@ -1,4 +1,4 @@
-var _4b82 = require('./index');
+var _4b82 = require('4b82');
 
 var config = {
 	git: { path: '~/git-path/' }
