@@ -53,7 +53,18 @@ exports.getCommitData = function (parent, message, author, committer) {
 	if (author)    commit += 'author ' + author + ' ' + time + "\n";
 	if (committer) commit += 'committer ' + committer + ' ' + time + "\n";
 	if (message)   commit += "\n" + message + "\n";
-	return 'commit ' + commit.length + "\0" + commit;
+
+	commit = 'commit ' + commit.length + "\0" + commit;
+
+	return {
+		tree: treeHash,
+		author: author,
+		committer: committer,
+		parent: parent,
+		message: message,
+		time: time,
+		commit: commit
+	};
 }
 
 //--------------------------------------------------

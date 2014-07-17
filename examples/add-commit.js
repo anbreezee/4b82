@@ -1,7 +1,7 @@
 var _4b82 = require('4b82');
 
 var config = {
-	git: { path: '../4b82-test/' }
+	git: { path: '~/git-path/' }
 }
 
 _4b82.init(config, function (err) {
@@ -12,11 +12,17 @@ _4b82.init(config, function (err) {
 });
 
 var addCommit = function (message, callback) {
-	_4b82.addCommit(message, 'me <me@localhost>', 'me <me@localhost>', function (err, hash, data, deflated) {
+	_4b82.addCommit(message, 'me <me@localhost>', 'me <me@localhost>', function (err, commit) {
 		if (err) return console.error(err);
-		console.log('hash: ' + hash);
-		console.log('data: ' + data);
-		// console.log('deflated: ' + deflated.toString('base64'));
+		console.log('tree: '      + commit.tree);
+		console.log('sha1: '      + commit.sha1);
+		console.log('author: '    + commit.author);
+		console.log('committer: ' + commit.committer);
+		console.log('parent: '    + commit.parent);
+		console.log('message: '   + commit.message);
+		console.log('time: '      + commit.time);
+		console.log('commit: '    + commit.commit);
+		console.log('deflated: '  + commit.deflated.toString('base64'));
 		console.log('----');
 		callback();
 	})

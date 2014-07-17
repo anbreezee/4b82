@@ -1,10 +1,10 @@
 var _4b82 = require('./index');
 
 var config = {
-	git: { path: '../4b82-test/' }
+	git: { path: '~/git-path/' }
 }
 
-var hash = '286570ebc97327e47de0b380cbcd5b2b0d57088b';
+var hash = '{insert commit hash here}';
 
 _4b82.init(config, function (err) {
 	if (err) return console.error(err);

@@ -40,16 +40,19 @@ var addCommit = exports.addCommit = function (message, author, committer, callba
 	}
 	git.getHeadMaster(config.git.path, function (err, parent) {
 		if (err) return unsetLockAndReturn(err, callback);
-		var data = git.getCommitData(parent, message, author, committer);
-		var sha1 = common.sha1(data);
-		common.deflate(data, function (err, deflated) {
+
+		var obj = git.getCommitData(parent, message, author, committer);
+		obj.sha1 = common.sha1(obj.commit);
+
+		common.deflate(obj.commit, function (err, deflated) {
+			obj.deflated = deflated;
 			if (err) return unsetLockAndReturn(err, callback);
-			git.storeCommit(config.git.path, sha1, deflated, function (err) {
+			git.storeCommit(config.git.path, obj.sha1, deflated, function (err) {
 				if (err) return unsetLockAndReturn(err, callback);
-				git.storeTag(config.git.path, parent, sha1, function (err) {
+				git.storeTag(config.git.path, parent, obj.sha1, function (err) {
 					if (err) return unsetLockAndReturn(err, callback);
 					git.unsetLock(config.git.path);
-					callback (null, sha1, data, deflated);
+					callback (null, obj);
 				});
 			});
 		});
