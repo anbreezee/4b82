@@ -22,7 +22,7 @@ var getPathToObjectDir = function (pathToGit, hash) {
 }
 
 var getPathToObject = function (pathToGit, hash) {
-	return getPathToObjectDir(pathToGit) + '/' + hash.substr(2);
+	return getPathToObjectDir(pathToGit, hash) + '/' + hash.substr(2);
 }
 
 var getPathToTag = function (pathToGit, hash) {
