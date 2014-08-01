@@ -134,7 +134,7 @@ exports.getCommit = function (pathToGit, hash, callback) {
 	});
 }
 
-exports.storeTag = function(pathToGit, parentHash, childHash, callback) {
+exports.storeTag = function (pathToGit, parentHash, childHash, callback) {
 	if (!parentHash) return callback(null);
 	var pathToTag = getPathToTag(pathToGit, parentHash);
 	fs.exists(pathToTag, function (exists) {
@@ -146,7 +146,7 @@ exports.storeTag = function(pathToGit, parentHash, childHash, callback) {
 	});
 }
 
-exports.getTag = function(pathToGit, hash, callback) {
+exports.getTag = function (pathToGit, hash, callback) {
 	var pathToTag = getPathToTag(pathToGit, hash);
 	fs.exists(pathToTag, function (exists) {
 		if (!exists) return callback(new Error('Tag not found'));
@@ -159,19 +159,19 @@ exports.getTag = function(pathToGit, hash, callback) {
 
 //--------------------------------------------------
 
-var isLocked = exports.isLocked = function(pathToGit) {
+var isLocked = exports.isLocked = function (pathToGit) {
 	var pathToLock = getLockFile(pathToGit);
 	return fs.existsSync(pathToLock);
 }
 
-exports.setLock = function(pathToGit) {
+exports.setLock = function (pathToGit) {
 	var pathToLock = getLockFile(pathToGit);
 	if (isLocked(pathToGit)) return false;
 	fs.writeFileSync(pathToLock, '1');
 	return isLocked(pathToGit);
 }
 
-exports.unsetLock = function(pathToGit) {
+exports.unsetLock = function (pathToGit) {
 	var pathToLock = getLockFile(pathToGit);
 	fs.unlinkSync(pathToLock);
 	return true;

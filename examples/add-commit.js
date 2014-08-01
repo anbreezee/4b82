@@ -4,10 +4,14 @@ var config = {
 	git: { path: '~/git-path/' }
 }
 
+var totalCommits = 100;
+
 _4b82.init(config, function (err) {
 	if (err) return console.error(err);
-	for (var i = 1; i < 100; i++) {
-		addCommit('test commit ' + i, function(){});
+	for (var i = 0; i < totalCommits; i++) {
+		addCommit('test commit ' + i, function(){
+			_4b82.unsetLock();
+		});
 	}
 });
 

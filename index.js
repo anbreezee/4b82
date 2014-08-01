@@ -36,32 +36,35 @@ exports.init = function (conf, callback) {
 
 var addCommit = exports.addCommit = function (message, author, committer, callback) {
 	if (git.isLocked(config.git.path) || !git.setLock(config.git.path)) {
-		return setTimeout(function() { addCommit(message, author, committer, callback); }, 100);
+		return setTimeout(function () { addCommit(message, author, committer, callback); }, 100);
 	}
-	git.getHeadMaster(config.git.path, function (err, parent) {
-		if (err) return unsetLockAndReturn(err, callback);
+	try {
+		git.getHeadMaster(config.git.path, function (err, parent) {
+			if (err) throw err;
 
-		var obj = git.getCommitData(parent, message, author, committer);
-		obj.sha1 = common.sha1(obj.commit);
+			var obj = git.getCommitData(parent, message, author, committer);
+			obj.sha1 = common.sha1(obj.commit);
 
-		common.deflate(obj.commit, function (err, deflated) {
-			obj.deflated = deflated;
-			if (err) return unsetLockAndReturn(err, callback);
-			git.storeCommit(config.git.path, obj.sha1, deflated, function (err) {
-				if (err) return unsetLockAndReturn(err, callback);
-				git.storeTag(config.git.path, parent, obj.sha1, function (err) {
-					if (err) return unsetLockAndReturn(err, callback);
-					git.unsetLock(config.git.path);
-					callback (null, obj);
+			common.deflate(obj.commit, function (err, deflated) {
+				if (err) throw err;
+
+				obj.deflated = deflated;
+
+				git.storeCommit(config.git.path, obj.sha1, deflated, function (err) {
+					if (err) throw err;
+
+					git.storeTag(config.git.path, parent, obj.sha1, function (err) {
+						if (err) throw err;
+
+						callback (null, obj);
+					});
 				});
 			});
 		});
-	});
-}
-
-var unsetLockAndReturn = function (err, callback) {
-	git.unsetLock(config.git.path);
-	return callback(err);
+	} catch (err) {
+		git.unsetLock(config.git.path);
+		return callback(err);
+	}
 }
 
 exports.getCommit = function (hash, callback) {
@@ -73,4 +76,8 @@ exports.getCommit = function (hash, callback) {
 			callback(null, result);
 		});
 	});
+}
+
+exports.unsetLock = function () {
+	git.unsetLock(config.git.path);
 }
