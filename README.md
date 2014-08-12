@@ -1,10 +1,11 @@
-#4b82 is the Social TrustCenter based on Control Version Systems (GIT) and Merkle Tree
+#4b82 is the Social TrustCenter Framework
+## based on Control Version Systems (GIT) and Merkle Tree
 
-The purpose of the 4B82 Project is providing Social TrustCenter, as well as opportunities to create your own Social TrustCenter, on the basis of modern mathematics and computer science.
+The purpose of the 4B82 Project is providing Social TrustCenter Framework, as well as opportunities to create your own Social TrustCenter, on the basis of modern mathematics and computer science.
 
 We preach the principles of anonymity and security, accessibility and impartiality, respecting for mathematical rigor and providing efficient technologies.
 
-ps. 4B82 is the first four symbols of the hash value for the GIT empty-tree "tree 0\0" 4b825dc642cb6eb9a060e54bf8d69288fbee4904
+*ps. 4B82 is the first four symbols of the hash value for the GIT empty-tree "tree 0\0" 4b825dc642cb6eb9a060e54bf8d69288fbee4904*
 
 ## 4B82 Project Key Technical Details
 
