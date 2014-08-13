@@ -1,6 +1,6 @@
 {
 	"name": "4b82",
-	"version": "0.0.8",
+	"version": "0.0.9",
 	"description": "4b82 Social TrustCenter Framework",
 	"main": "index.js",
 	"scripts": {

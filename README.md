@@ -13,9 +13,11 @@ The goal of this project is to allow a straightforward and robust way to establi
 
 Currently existing methods for attaining this rely on highly specialized software, are computationally demanding, or both.
 
-We have decided to use git as a core framework for implementing this functionality because of its versatility, robustness, strong safeguards against corruption and the simple fact that most of the necessary functionality was already present there.
+We have decided to use git’s architectural framework as the core implementing this functionality because of its versatility, robustness, strong safeguards against corruption, as well as its self-evidential flexibility.
 
-Please, read more about 4b82 at [4b82.com](http://4b82.com/#/details)
+Strict linearity was achieved by leveraging hash functionality typical to all git-like solutions while eschewing branching functionality, and was done in a manner that minimizes unnecessary (for our purposes) overhead of typical git object behaviors (but does not compromise the formal integrity of the git structures involved).
+
+Read more about 4b82 at [4b82.com](http://4b82.com/#/details)
 
 ## How to use it?
 
