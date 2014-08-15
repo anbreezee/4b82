@@ -40,48 +40,55 @@ Now, you can use 4b82 functions and make your own 4b82 server.
 
 For example, let's create a simple application that adds commit to our fresh 4b82 git repository:
 
-<pre>var _4b82 = include('4b82');
- 
+<pre>var _4b82 = require('4b82');
+
 var config = {
-	git: { path: '~/git-repo/' } // Path to git repository
+	git: { path: '~/git-path/' } // Path to git repository
 }
- 
-// 4b82 initialization
+
+// Initialize 4b82
 _4b82.init(config, function (err) {
 	if (err) return console.error(err);
- 
-	// Add commit to our 4b82 git repository
-	_4b82.addCommit('test commit', 'me <me@local>', 'me <me@local>',
-		function (err, commit) {
+
+	// Get sole access to GIT
+	_4b82.getAccess(function () {
+
+		// Add commit
+		_4b82.addCommit('test commit', 'me <me@localhost>', 'me <me@localhost>', function (err, commit) {
 			if (err) return console.error(err);
- 
-			_4b82.unsetLock() // Important! unset lock after adding commit
- 
-			console.log('tree: '      + commit.tree);
-			console.log('sha1: '      + commit.sha1);
-			console.log('author: '    + commit.author);
-			console.log('committer: ' + commit.committer);
-			console.log('parent: '    + commit.parent);
-			console.log('message: '   + commit.message);
-			console.log('time: '      + commit.time);
-			console.log('commit: '    + commit.commit);
-			console.log('deflated: '  + commit.deflated.toString('base64'));
-		}
-	);
-});</pre>
+
+			// Print commit data
+			_4b82.prettyPrint(commit);
+
+			// Release access
+			_4b82.releaseAccess();
+
+		});
+	});
+});
+</pre>
 
 When you run this application it adds new commit to 4b82 git repository and returns `commit hash`, `data` and `deflated bytes`.
 
 If you need to get specified commit, you can use function 'getCommit':
 
-<pre>_4b82.getCommit(hash, function (err, result) {
-	console.log('Commit: ' + result.commit);
-	console.log('Tag: '    + result.tag);
+<pre>// Initialize 4b82
+_4b82.init(config, function (err) {
+	if (err) return console.error(err);
+
+	// Get commit data
+	_4b82.getCommit(hash, function (err, commit) {
+		if (err) return console.error(err);
+
+		// Print commit data
+		_4b82.prettyPrint(commit);
+
+	})
 });</pre>
 
-This function returns object (result) with two fields: `commit` and `tag`.
+This function returns commit object with tag field.
 
-`commit` field contains whole git commit data, you can parse it for author, committer, e.t.c.
+`commit` contains whole git commit data, you can parse it for author, committer, e.t.c.
 
 `tag` field uses for backward navigation.
 

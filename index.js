@@ -34,50 +34,69 @@ exports.init = function (conf, callback) {
 	});
 }
 
-var addCommit = exports.addCommit = function (message, author, committer, callback) {
+var getAccess = exports.getAccess = function (callback) {
 	if (git.isLocked(config.git.path) || !git.setLock(config.git.path)) {
-		return setTimeout(function () { addCommit(message, author, committer, callback); }, 100);
+		return setTimeout(function () { getAccess(callback); }, 100);
 	}
-	try {
-		git.getHeadMaster(config.git.path, function (err, parent) {
-			if (err) throw err;
-
-			var obj = git.getCommitData(parent, message, author, committer);
-			obj.sha1 = common.sha1(obj.commit);
-
-			common.deflate(obj.commit, function (err, deflated) {
-				if (err) throw err;
-
-				obj.deflated = deflated;
-
-				git.storeCommit(config.git.path, obj.sha1, deflated, function (err) {
-					if (err) throw err;
-
-					git.storeTag(config.git.path, parent, obj.sha1, function (err) {
-						if (err) throw err;
-
-						callback (null, obj);
-					});
-				});
-			});
-		});
-	} catch (err) {
-		git.unsetLock(config.git.path);
-		return callback(err);
-	}
+	callback();
 }
 
-exports.getCommit = function (hash, callback) {
-	git.getCommit(config.git.path, hash, function (err, inflated) {
+exports.addCommit = function (message, author, committer, callback) {
+	git.getHeadMaster(config.git.path, function (err, parent) {
 		if (err) return callback(err);
-		git.getTag(config.git.path, hash, function (err, data) {
-			var result = { commit: inflated };
-			if (!err) result.tag = data;
-			callback(null, result);
+		var obj = git.getCommitData(parent, message, author, committer);
+		obj.sha1 = common.sha1(obj.commit);
+		common.deflate(obj.commit, function (err, deflated) {
+			if (err) return callback(err);
+			obj.deflated = deflated;
+			git.storeCommit(config.git.path, obj.sha1, deflated, function (err) {
+				if (err) return callback(err);
+				git.storeTag(config.git.path, parent, obj.sha1, function (err) {
+					if (err) return callback(err);
+					callback (null, obj);
+				});
+			});
 		});
 	});
 }
 
-exports.unsetLock = function () {
+var getCommit = exports.getCommit = function (hash, callback) {
+	git.getCommit(config.git.path, hash, function (err, inflated) {
+		if (err) return callback(err);
+		git.getTag(config.git.path, hash, function (err, tag) {
+			if (err) return callback(err);
+			var result = {};
+			commit = git.parseCommitData(inflated);
+			commit.tag = tag;
+			callback(null, commit);
+		});
+	});
+}
+
+exports.getLastCommit = function (callback) {
+	git.getHeadMaster(config.git.path, function (err, hash) {
+		if (err) return callback(err);
+		if (!hash) return callback (null, null); // Git repository is empty
+		getCommit(hash, callback); // Else try to get commit
+	});
+}
+
+exports.releaseAccess = function () {
 	git.unsetLock(config.git.path);
+}
+
+exports.prettyPrint = function (commit) {
+	['tree', 'sha1', 'author', 'committer', 'parent', 'message', 'time', 'commit', 'deflated', 'tag'].forEach(function (entry) {
+		if (commit[entry]) {
+			var value = commit[entry];
+			if (entry == 'deflated') {
+				value = commit.deflated.toString('base64');
+				console.log(entry + ': ' + value);
+			} else if (entry == 'commit') {
+				console.log(entry + ":\n\n" + value.trim() + "\n\n----\n");
+			} else {
+				console.log(entry + ': ' + value);
+			}
+		}
+	});
 }

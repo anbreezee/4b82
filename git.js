@@ -67,6 +67,37 @@ exports.getCommitData = function (parent, message, author, committer) {
 	};
 }
 
+exports.parseCommitData = function (data) {
+	data = data.split("\n");
+	var commit = {};
+
+	while (data.length > 0) {
+		var row = data.shift().trim();
+		if (row.length == 0) break; // Git header ends
+
+		var pices = row.split(' ');
+		var elm = pices.shift();
+		var val = pices.join(' ');
+
+		var allowable = ['tree', 'parent', 'author', 'committer'];
+		if (allowable.indexOf(elm) > -1) {
+			commit[elm] = val.trim();
+		}
+	}
+
+	// skip empty lines
+	while (data.length > 0) {
+		if (data[0].trim().length != 0) break;
+		data.shift().trim();
+	}
+
+	if (data.length > 0) {
+		commit.message = data.join("\n").trim();
+	}
+
+	return commit;
+}
+
 //--------------------------------------------------
 
 exports.getHeadMaster = function (pathToGit, callback) {
@@ -149,7 +180,7 @@ exports.storeTag = function (pathToGit, parentHash, childHash, callback) {
 exports.getTag = function (pathToGit, hash, callback) {
 	var pathToTag = getPathToTag(pathToGit, hash);
 	fs.exists(pathToTag, function (exists) {
-		if (!exists) return callback(new Error('Tag not found'));
+		if (!exists) return callback(null, null);
 		fs.readFile(pathToTag, 'utf8', function (err, data) {
 			if (err) return callback(err);
 			return callback(null, data);
