@@ -21,16 +21,19 @@ Initialize an empty git repository:
 
 <pre>mkdir git-repo && cd git-repo
 git init
-cd ..</pre>
+cd ..
+</pre>
 
 Create the new node.js project:
 
 <pre>mkdir 4b82-server && cd 4b82-server
-npm init</pre>
+npm init
+</pre>
 
 Add 4b82 code from npm:
 
-<pre>npm install 4b82 --save</pre>
+<pre>npm install 4b82 --save
+</pre>
 
 Now, you can use 4b82 functions and make your own 4b82 server.
 
@@ -50,7 +53,8 @@ During initialization, it is necessary to pass a `configuration object`. Current
 	git: {
 		path: 'path-to-git'
 	}
-}</pre>
+}
+</pre>
 
 #### Application initialization
 
@@ -170,7 +174,8 @@ _4b82.init(config, function (err) {
 		_4b82.prettyPrint(commit);
 
 	})
-});</pre>
+});
+</pre>
 
 This function returns commit object with tag field.
 
