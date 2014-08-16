@@ -1,4 +1,4 @@
-#4b82 - Continuity Trustcenter Framework
+#4b82 is the Continuity Trustcenter Framework
 ## based on GIT and Merkle Tree
 
 *ps. 4B82 is the first four symbols of the hash value for the GIT empty-tree "tree 0\0" 4b825dc642cb6eb9a060e54bf8d69288fbee4904*
@@ -42,7 +42,7 @@ Note: all callback functions are `function (err, result)` or `function (err)`. i
 
 First, it is necessary to initialize the application.
 
-During initialization, it is necessary to pass a **configuration object**. Currently, this object is simple and includes a `git` field. This field is an object with the `path` field which stores the path to the GIT repository. For example:
+During initialization, it is necessary to pass a `configuration object`. Currently, this object is simple and includes a `git` field. This field is an object with the `path` field which stores the path to the GIT repository. For example:
 
 #### Configuration object
 
@@ -177,5 +177,7 @@ This function returns commit object with tag field.
 `commit` contains whole git commit data, you can parse it for author, committer, e.t.c.
 
 `tag` field uses for backward navigation.
+
+---
 
 **That's all.**
