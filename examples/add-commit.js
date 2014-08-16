@@ -8,7 +8,7 @@ var config = {
 _4b82.init(config, function (err) {
 	if (err) return console.error(err);
 
-	// Get sole access to GIT
+	// Get exclusive access to GIT
 	_4b82.getAccess(function () {
 
 		// Add commit
