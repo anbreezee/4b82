@@ -1,4 +1,4 @@
-#4b82 is the Continuity Trustcenter Framework
+#4b82 - Continuity Trustcenter Framework
 ## based on GIT and Merkle Tree
 
 *ps. 4B82 is the first four symbols of the hash value for the GIT empty-tree "tree 0\0" 4b825dc642cb6eb9a060e54bf8d69288fbee4904*
