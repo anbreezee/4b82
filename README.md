@@ -107,7 +107,7 @@ Before you make any changes to the GIT-repository, you must obtain an exclusive 
 
 | Arguments | Description |
 |:--- |:--- |
-| `callback (err, commit)` | Callback function that receives commit object after adding or error. If there is no commits, null is returned. |
+| `callback (err, commit)` | Callback function that receives commit object after adding or error.<br />If there is no commits, null is returned. |
 
 #### Get commit with specified hash value
 
@@ -116,7 +116,7 @@ Before you make any changes to the GIT-repository, you must obtain an exclusive 
 | Arguments | Description |
 |:--- |:--- |
 | `hash` | The hash value for the desired commit |
-| `callback (err, commit)` | Callback function that receives commit object after adding or error. If there is no commits, null is returned. |
+| `callback (err, commit)` | Callback function that receives commit object after adding or error.<br />If there is no commits, null is returned. |
 
 ### Displaying information
 
