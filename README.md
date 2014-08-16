@@ -1,4 +1,4 @@
-#4b82 is the Continuity Trustcenter Framework
+#4b82 - Continuity Trustcenter Framework
 ## based on GIT and Merkle Tree
 
 *ps. 4B82 is the first four symbols of the hash value for the GIT empty-tree "tree 0\0" 4b825dc642cb6eb9a060e54bf8d69288fbee4904*
@@ -61,7 +61,7 @@ During initialization, it is necessary to pass a `configuration object`. Current
 `function init (conf)`
 
 | Arguments | Description                      |
-| --- | --- |
+|:--- |:--- |
 | `conf`    | Configuration object (see above) |
 
 ### Exclusive access
@@ -77,7 +77,7 @@ Before you make any changes to the GIT-repository, you must obtain an exclusive 
 `function getAccess (callback)`
 
 | Arguments | Description |
-| --- | --- |
+|:--- |:--- |
 | `callback (err)` | Callback function that calls immediately after receiving the exclusive access to the GIT repository |
 
 #### Releasing the exclusive access
@@ -85,7 +85,7 @@ Before you make any changes to the GIT-repository, you must obtain an exclusive 
 `function releaseAccess ()`
 
 | Arguments | Description |
-| --- | --- |
+|:--- |:--- |
 | *none* | Releases the exclusive access to the GIT repository |
 
 ### Adding and reading commits
@@ -95,7 +95,7 @@ Before you make any changes to the GIT-repository, you must obtain an exclusive 
 `function addCommit (message, author, committer, callback)`
 
 | Arguments | Description |
-| --- | --- |
+|:--- |:--- |
 | `message` | Commit message |
 | `author`  | Commit author |
 | `committer` | Committer [(your system)](http://stackoverflow.com/questions/18750808/difference-between-author-and-committer-in-git) |
@@ -106,7 +106,7 @@ Before you make any changes to the GIT-repository, you must obtain an exclusive 
 `function getRecentCommit (callback)`
 
 | Arguments | Description |
-| --- | --- |
+|:--- |:--- |
 | `callback (err, commit)` | Callback function that receives commit object after adding or error. If there is no commits, null is returned. |
 
 #### Get commit with specified hash value
@@ -114,7 +114,7 @@ Before you make any changes to the GIT-repository, you must obtain an exclusive 
 `function getCommit (hash, callback)`
 
 | Arguments | Description |
-| --- | --- |
+|:--- |:--- |
 | `hash` | The hash value for the desired commit |
 | `callback (err, commit)` | Callback function that receives commit object after adding or error. If there is no commits, null is returned. |
 
@@ -123,7 +123,7 @@ Before you make any changes to the GIT-repository, you must obtain an exclusive 
 `function prettyPrint (commit)` - show information about commit
 
 | Arguments | Description |
-| --- | --- |
+|:--- |:--- |
 | `commit`  | Commit object returned by `addCommit`, `getRecentCommit` or `getCommit` functions |
 
 ## Examples
