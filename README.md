@@ -1,5 +1,5 @@
 # 4b82 - Continuity Trustcenter Framework
-## based on GIT and Merkle Tree
+## Based on GIT and Merkle Tree
 
 *ps. 4B82 is the first four symbols of the hash value for the GIT empty-tree "tree 0\0" 4b825dc642cb6eb9a060e54bf8d69288fbee4904*
 
@@ -68,9 +68,9 @@ During initialization, it is necessary to pass a `configuration object`. Current
 
 Before you make any changes to the GIT-repository, you must obtain an exclusive access to GIT-repository at the application level.
 
-***Important**: please, do not forget to call `releaseAccess()` and to release exclusive access to the repository at the end of the operation.*
+**Important**: please, do not forget to call `releaseAccess()` and to release exclusive access to the repository at the end of the operation.
 
-***Important**: exclusive access is provided only at the application logic level, not the system level.*
+**Important**: exclusive access is provided only at the application logic level, not the system level.
 
 #### Obtain the Exclusive Access
 
@@ -78,7 +78,7 @@ Before you make any changes to the GIT-repository, you must obtain an exclusive 
 
 | Arguments | Description |
 |:--- |:--- |
-| `callback (err)` | Callback function that calls immediately after receiving the exclusive access to the GIT repository |
+| `callback (err)` | Callback function that calls immediately after receiving<br />the exclusive access to the GIT repository |
 
 #### Release the Exclusive Access
 
@@ -144,7 +144,7 @@ _4b82.init(config, function (err) {
 	_4b82.getAccess(function () {
 
 		// Add commit
-		_4b82.addCommit('test commit', 'me <me@localhost>', 'me <me@localhost>', function (err, commit) {
+		_4b82.addCommit('test commit', 'me &lt;me@localhost>', 'me &lt;me@localhost>', function (err, commit) {
 			if (err) return console.error(err);
 
 			// Print commit data
