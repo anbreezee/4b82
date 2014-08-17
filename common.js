@@ -29,9 +29,16 @@ exports.sha1 = function (data) {
 }
 
 exports.getTimestamp = function () {
-	var offset = new Date().getTimezoneOffset();
-	offset = ((offset < 0 ? '+' : '-') + pad(parseInt(Math.abs(offset / 60)), 2) + pad(Math.abs(offset % 60), 2));
-	return Math.floor(new Date().getTime() / 1000) + ' ' + offset;
+	var seconds = Math.floor(new Date().getTime() / 1000);
+	return { seconds: seconds, timestamp: seconds + ' +0000' };
+}
+
+exports.parseTimestamp = function (seconds, offset) {
+	var offsetK = (offset.substr(0, 1) == '-') ? 1 : -1;
+	var offsetM = parseInt(offset.substr(-2, 2));
+	var offsetH = parseInt(offset.substr(-4, 2));
+	offset = (offsetH * 60 + offsetM) * offsetK * 60;
+	return parseInt(seconds) + offset;
 }
 
 var pad = function (number, length) {

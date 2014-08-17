@@ -50,8 +50,8 @@ exports.getCommitData = function (parent, message, author, committer) {
 	var time = common.getTimestamp();
 
 	if (parent)    commit += 'parent ' + parent + "\n";
-	if (author)    commit += 'author ' + author + ' ' + time + "\n";
-	if (committer) commit += 'committer ' + committer + ' ' + time + "\n";
+	if (author)    commit += 'author ' + author + ' ' + time.timestamp + "\n";
+	if (committer) commit += 'committer ' + committer + ' ' + time.timestamp + "\n";
 	if (message)   commit += "\n" + message + "\n";
 
 	commit = 'commit ' + commit.length + "\0" + commit;
@@ -62,7 +62,8 @@ exports.getCommitData = function (parent, message, author, committer) {
 		committer: committer,
 		parent: parent,
 		message: message,
-		time: time,
+		time: time.timestamp,
+		seconds: time.seconds,
 		commit: commit
 	};
 }
@@ -93,6 +94,16 @@ exports.parseCommitData = function (data) {
 
 	if (data.length > 0) {
 		commit.message = data.join("\n").trim();
+	}
+
+	if (commit['author']) {
+		var str = commit['author'].split(' ');
+		if (str.length > 2) {
+			var offset = str[str.length - 1];
+			var seconds = str[str.length - 2];
+			commit.time = seconds + ' ' + offset;
+			commit.seconds = common.parseTimestamp(seconds, offset);
+		}
 	}
 
 	return commit;

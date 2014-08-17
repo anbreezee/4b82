@@ -86,7 +86,7 @@ exports.releaseAccess = function () {
 }
 
 exports.prettyPrint = function (commit) {
-	['tree', 'sha1', 'author', 'committer', 'parent', 'message', 'time', 'commit', 'deflated', 'tag'].forEach(function (entry) {
+	['tree', 'sha1', 'author', 'committer', 'parent', 'message', 'time', 'seconds', 'commit', 'deflated', 'tag'].forEach(function (entry) {
 		if (commit[entry]) {
 			var value = commit[entry];
 			if (entry == 'deflated') {
