@@ -144,7 +144,8 @@ _4b82.init(config, function (err) {
 	_4b82.getAccess(function () {
 
 		// Add commit
-		_4b82.addCommit('test commit', 'me &lt;me@localhost>', 'me &lt;me@localhost>', function (err, commit) {
+		_4b82.addCommit('test commit', 'me &lt;me@localhost>', 'me &lt;me@localhost>',
+				function (err, commit) {
 			if (err) return console.error(err);
 
 			// Print commit data
