@@ -1,6 +1,6 @@
 {
 	"name": "4b82",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "4b82 Continuity Trustcenter Framework",
 	"main": "index.js",
 	"scripts": {

@@ -1,21 +1,21 @@
-#4b82 - Continuity Trustcenter Framework
+# 4b82 - Continuity Trustcenter Framework
 ## based on GIT and Merkle Tree
 
 *ps. 4B82 is the first four symbols of the hash value for the GIT empty-tree "tree 0\0" 4b825dc642cb6eb9a060e54bf8d69288fbee4904*
 
 ## 4B82 Project Key Technical Details
 
-The goal of this project is to allow a straightforward and robust way to establish abstract, provably immutable sequences of digital events, which can later be later utilized by other developers.
+The goal of this project is to allow a straightforward and robust way to establish abstract, provably immutable sequences of digital events.
 
 Currently existing methods for attaining this rely on highly specialized software, are computationally demanding, or both.
 
-We have decided to use git’s architectural framework as the core implementing this functionality because of its versatility, robustness, strong safeguards against corruption, as well as its self-evidential flexibility.
+We have decided to use GIT’s architectural framework as the core implementing this functionality because of its versatility, robustness, strong safeguards against corruption, as well as its self-evidential flexibility.
 
 Strict linearity was achieved by leveraging hash functionality typical to all git-like solutions while eschewing branching functionality, and was done in a manner that minimizes unnecessary (for our purposes) overhead of typical git object behaviors (but does not compromise the formal integrity of the git structures involved).
 
 Read more about 4b82 Continuity Trustcenter Framework at [4b82.com](http://4b82.com/#/details)
 
-## How to use it?
+## How to Use it?
 
 Initialize an empty git repository:
 
@@ -39,7 +39,7 @@ Now, you can use 4b82 functions and make your own 4b82 server.
 
 ## API Functions
 
-Note: all callback functions are `function (err, result)` or `function (err)`. if an error occurs then `err` object will be passed to callback function. Otherwise, `err` object is `null` and `result` object will be passed to callback (if result is exists).
+Note: all callback functions are `function (err, result)` or `function (err)`. if an error occurs then `err` object will be passed to callback function. Otherwise, `err` object is `null` and `result` object will be passed to the callback function (if result is exists).
 
 ### Initialization
 
@@ -47,7 +47,7 @@ First, it is necessary to initialize the application.
 
 During initialization, it is necessary to pass a `configuration object`. Currently, this object is simple and includes a `git` field. This field is an object with the `path` field which stores the path to the GIT repository. For example:
 
-#### Configuration object
+#### Configuration Object
 
 <pre>{
 	git: {
@@ -56,7 +56,7 @@ During initialization, it is necessary to pass a `configuration object`. Current
 }
 </pre>
 
-#### Application initialization
+#### Application Initialization
 
 `function init (conf)`
 
@@ -64,15 +64,15 @@ During initialization, it is necessary to pass a `configuration object`. Current
 |:--- |:--- |
 | `conf`    | Configuration object (see above) |
 
-### Exclusive access
+### Exclusive Access
 
 Before you make any changes to the GIT-repository, you must obtain an exclusive access to GIT-repository at the application level.
 
-***Important**: please, do not forget to call `releaseAccess` and release exclusive access to the repository at the end of the operation.*
+***Important**: please, do not forget to call `releaseAccess()` and to release exclusive access to the repository at the end of the operation.*
 
-***Important**: exclusive access is provided only at the level of application logic, not the system.*
+***Important**: exclusive access is provided only at the application logic level, not the system level.*
 
-#### Obtaining the exclusive access
+#### Obtain the Exclusive Access
 
 `function getAccess (callback)`
 
@@ -80,7 +80,7 @@ Before you make any changes to the GIT-repository, you must obtain an exclusive 
 |:--- |:--- |
 | `callback (err)` | Callback function that calls immediately after receiving the exclusive access to the GIT repository |
 
-#### Releasing the exclusive access
+#### Release the Exclusive Access
 
 `function releaseAccess ()`
 
@@ -88,9 +88,9 @@ Before you make any changes to the GIT-repository, you must obtain an exclusive 
 |:--- |:--- |
 | *none* | Releases the exclusive access to the GIT repository |
 
-### Adding and reading commits
+### Adding and Reading Commits
 
-#### Add a commit to the repository
+#### Add a Commit to the Repository
 
 `function addCommit (message, author, committer, callback)`
 
@@ -101,7 +101,7 @@ Before you make any changes to the GIT-repository, you must obtain an exclusive 
 | `committer` | Committer [(your system)](http://stackoverflow.com/questions/18750808/difference-between-author-and-committer-in-git) |
 | `callback (err, commit)` | Callback function that receives commit object after adding or error |
 
-#### Get recently added commit
+#### Get the Recently Added Commit
 
 `function getRecentCommit (callback)`
 
@@ -109,7 +109,7 @@ Before you make any changes to the GIT-repository, you must obtain an exclusive 
 |:--- |:--- |
 | `callback (err, commit)` | Callback function that receives commit object after adding or error.<br />If there is no commits, null is returned. |
 
-#### Get commit with specified hash value
+#### Get the Commit With Hash Value
 
 `function getCommit (hash, callback)`
 
@@ -118,7 +118,7 @@ Before you make any changes to the GIT-repository, you must obtain an exclusive 
 | `hash` | The hash value for the desired commit |
 | `callback (err, commit)` | Callback function that receives commit object after adding or error.<br />If there is no commits, null is returned. |
 
-### Displaying information
+### Display the Commit Data
 
 `function prettyPrint (commit)` - show information about commit
 
@@ -160,7 +160,7 @@ _4b82.init(config, function (err) {
 
 When you run this application it adds new commit to 4b82 git repository and prints the `commit hash`, `data` and `deflated bytes`.
 
-If you need to get specified commit, you can use function 'getCommit':
+To get specific commit use `getCommit` function:
 
 <pre>// Initialize 4b82
 _4b82.init(config, function (err) {
@@ -177,11 +177,11 @@ _4b82.init(config, function (err) {
 });
 </pre>
 
-This function returns commit object with tag field.
+This function returns commit object (with tag field).
 
 `commit` contains whole git commit data, you can parse it for author, committer, e.t.c.
 
-`tag` field uses for backward navigation.
+`tag` field uses for backward navigation (read more about [backward navigation](http://4b82.com/#/details)).
 
 ---
 
