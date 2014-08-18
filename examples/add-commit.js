@@ -13,7 +13,10 @@ _4b82.init(config, function (err) {
 
 		// Add commit
 		_4b82.addCommit('test commit', 'me <me@localhost>', 'me <me@localhost>', function (err, commit) {
-			if (err) return console.error(err);
+			if (err) {
+				_4b82.releaseAccess();
+				return console.error(err);
+			}
 
 			// Print commit data
 			_4b82.prettyPrint(commit);

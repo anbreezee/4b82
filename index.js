@@ -76,7 +76,7 @@ var getCommit = exports.getCommit = function (hash, callback) {
 exports.getRecentCommit = function (callback) {
 	git.getHeadMaster(config.git.path, function (err, hash) {
 		if (err) return callback(err);
-		if (!hash) return callback (null, null); // Git repository is empty
+		if (!hash || hash == git.treeHash) return callback (null, null); // Git repository is empty
 		getCommit(hash, callback); // Else try to get commit
 	});
 }

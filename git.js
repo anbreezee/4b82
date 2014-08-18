@@ -1,7 +1,7 @@
 var fs     = require('fs');
 var common = require('./common');
 
-var treeHash = '4b825dc642cb6eb9a060e54bf8d69288fbee4904';
+var treeHash = exports.treeHash = '4b825dc642cb6eb9a060e54bf8d69288fbee4904';
 
 //--------------------------------------------------
 
@@ -45,16 +45,37 @@ var getEmptyTreeData = function () {
 	return "tree 0\0";
 }
 
+var byteLength = function(str) {
+	var length = str.length, count = 0, i = 0, ch = 0;
+	for (i; i < length; i++) {
+		ch = str.charCodeAt(i);
+		if (ch <= 127) {
+			count++;
+		} else if (ch <= 2047) {
+			count += 2;
+		} else if (ch <= 65535) {
+			count += 3;
+		} else if (ch <= 2097151) {
+			count += 4;
+		} else if (ch <= 67108863) {
+			count += 5;
+		} else {
+			count += 6;
+		}
+	}
+	return count;
+};
+
 exports.getCommitData = function (parent, message, author, committer) {
 	var commit = 'tree ' + treeHash + "\n";
 	var time = common.getTimestamp();
 
-	if (parent)    commit += 'parent ' + parent + "\n";
+	if (parent && parent != treeHash)    commit += 'parent ' + parent + "\n";
 	if (author)    commit += 'author ' + author + ' ' + time.timestamp + "\n";
 	if (committer) commit += 'committer ' + committer + ' ' + time.timestamp + "\n";
 	if (message)   commit += "\n" + message + "\n";
 
-	commit = 'commit ' + commit.length + "\0" + commit;
+	commit = 'commit ' + byteLength(commit) + "\0" + commit;
 
 	return {
 		tree: treeHash,
@@ -177,7 +198,7 @@ exports.getCommit = function (pathToGit, hash, callback) {
 }
 
 exports.storeTag = function (pathToGit, parentHash, childHash, callback) {
-	if (!parentHash) return callback(null);
+	if (!parentHash || parentHash == treeHash) return callback(null);
 	var pathToTag = getPathToTag(pathToGit, parentHash);
 	fs.exists(pathToTag, function (exists) {
 		if (exists) return callback(new Error('Tag already exists'));
@@ -215,6 +236,8 @@ exports.setLock = function (pathToGit) {
 
 exports.unsetLock = function (pathToGit) {
 	var pathToLock = getLockFile(pathToGit);
-	fs.unlinkSync(pathToLock);
+	if (fs.existsSync(pathToLock)) {
+		fs.unlinkSync(pathToLock);
+	}
 	return true;
 }
