@@ -70,7 +70,9 @@ exports.getCommitData = function (parent, message, author, committer) {
 	var commit = 'tree ' + treeHash + "\n";
 	var time = common.getTimestamp();
 
-	if (parent && parent != treeHash)    commit += 'parent ' + parent + "\n";
+	if (parent == treeHash) parent = null;
+
+	if (parent)    commit += 'parent ' + parent + "\n";
 	if (author)    commit += 'author ' + author + ' ' + time.timestamp + "\n";
 	if (committer) commit += 'committer ' + committer + ' ' + time.timestamp + "\n";
 	if (message)   commit += "\n" + message + "\n";
