@@ -26,7 +26,7 @@ var getPathToObject = function (pathToGit, hash) {
 }
 
 var getPathToTag = function (pathToGit, hash) {
-	return getPathToGitRoot(pathToGit) + '/refs/tags/' + hash;
+	return getPathToGitRoot(pathToGit) + '/refs/tags/' + hash + '_4b82';
 }
 
 //--------------------------------------------------
